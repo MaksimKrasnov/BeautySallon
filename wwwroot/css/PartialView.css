@@ -1,0 +1,24 @@
+﻿.textService {
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Forum',Arial,sans-serif;
+    display: inline;
+}
+
+.ml {
+    margin-left: 25%;
+    border: 2px solid transparent; /* Начальные стили рамки */
+    transition: border-color 0.3s, color 0.3s;
+    margin-bottom: 0;
+}
+
+    .ml:hover {
+        border-color: #da9471; /* Цвет рамки при наведении */
+        color: #da9471; /* Цвет текста при наведении */
+    }
+
+        .ml:hover p {
+            color: #da9471; /* Цвет текста при наведении */
+        }
+
+

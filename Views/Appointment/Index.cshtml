@@ -1,0 +1,194 @@
+﻿@model Service;
+
+<style>
+	.signUp {
+		background-color: #B27658;
+		border: none;
+	}
+
+		.signUp:hover {
+			background-color: #B27658;
+			opacity: 0.5;
+		}
+		
+		.signUp:focus {
+			border-color: #B27658;
+			box-shadow: 0 0 0 0.1rem rgba(182, 152, 89, 0.8); 
+		}
+
+	.inp:focus {
+		border-color: #B27658;
+		box-shadow: 0 0 0 0.1rem rgba(182, 152, 89, 0.8);
+	}
+</style>
+<div class="container-fluid pt-5 bg-dark text-light">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card bg-dark text-light  border-0">
+				<div class="card-body">
+
+					<h4>Выбрана услуга:</h4>
+					<h2 class="card-title">@Model.Name</h2>
+					<p class="card-text">Цена: @Model.Price</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid pt-5">
+	<h3 class="text-center">Выберите дату</h3>
+	<form id="mainForm" class="mb-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="text-center">
+					<!-- Добавлен внутренний контейнер -->
+					<input type="date" id="datepicker" name="selectedDate" class="form-control inp" min="@DateTime.Today.ToString("yyyy-MM-dd")">
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<h3 class="text-center mt-4">Выберите мастера</h3>
+			<div class="col-md-6">
+				<select id="masterSelect" class="form-control mb-3 inp">
+
+					@foreach (var master in ViewBag.Masters)
+					{
+						<option value="@master.Value">@master.Text</option>
+					}
+				</select>
+				<input type="hidden" id="masterId" value="@ViewBag.SelectedMasterId" />
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="container-fluid pb-5">
+	<div class="modal-body">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp" />
+				<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
+				<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp" />
+				<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым</div>
+
+				<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+
+
+				<div id="timeSlots" class="row justify-content-center">
+					<!-- Здесь будет отображаться частичное представление -->
+				</div>
+				<button id="signUp" class="btn btn-primary w-100 signUp">Оставить заявку</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Скрытые поля для передачи данных из основного представления -->
+<input type="hidden" id="idInput" value="@Model.Id" />
+
+<input type="hidden" id="selectedDateTimeMain" name="SelectedDateTime" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+	$(function () {
+		$('#datepicker').change(function () {
+			var selectedDate = $(this).val(); // Получаем выбранную дату
+			executeAjaxRequest(selectedDate); // Вызываем функцию с передачей выбранной даты
+		});
+
+		// При изменении выбора мастера
+		$('#masterSelect').change(function () {
+			var selectedDate = $('#datepicker').val(); // Получаем выбранную дату
+			if (selectedDate) { // Проверяем, выбрана ли дата
+				console.log(selectedDate);
+				executeAjaxRequest(selectedDate);
+			}
+		});
+		function executeAjaxRequest(selectedDate) {
+			var masterId = $('#masterSelect').val();
+			$.get('@Url.Action("GetTimeSlot", "Appointment")', { selectedDate: selectedDate, masterId: masterId })
+				.done(function (response) {
+					$('#timeSlots').html(response);
+				})
+				.fail(function (xhr, status, error) {
+					console.error(xhr.responseText);
+				});
+			return false; // Отменяем стандартное действие отправки формы
+		};
+		$('#nameInput').on('input', function () {
+			var nameInput = $(this).val().trim(); // Получаем значение поля и удаляем пробелы в начале и в конце
+
+			if (nameInput !== '') { // Если поле не пустое, скрываем сообщение об ошибке
+				$('#nameInputError').hide();
+			}
+		});
+		$('#phoneInput').on('input', function () {
+			var value = this.value.replace(/\D/g, ''); // Удаление всех символов, кроме цифр
+			if (value.length > 11) { // Ограничение на количество цифр
+				value = value.slice(0, 11);
+			}
+			this.value = '+7 ' + value.slice(1); // Добавление префикса +7 и введенных цифр
+			if (phoneInput !== ''||phoneInput.length==12) { // Если поле не пустое, скрываем сообщение об ошибке
+				$('#phoneInputError').hide();
+			}
+		});
+		$('#signUp').click(function () {
+			var serviceId = $('#idInput').val();
+			var nameInput = $('#nameInput').val().trim();
+			var phoneInput = $('#phoneInput').val().replaceAll(' ', '');
+			var selectedDateTime = $('#selectedDateTime').val();
+			var masterId = $('#masterSelect').val();
+
+			if (nameInput === '') { // Проверяем, не пустое ли поле
+				$('#nameInputError').show(); // Показываем сообщение об ошибке
+				return; // Останавливаем выполнение функции, если поле пустое
+			} else {
+				$('#nameInputError').hide(); // Скрываем сообщение об ошибке, если поле заполнено
+			}
+			if (phoneInput === '') { // Проверяем, не пустое ли поле
+				$('#phoneInputError').show(); // Показываем сообщение об ошибке
+				return; // Останавливаем выполнение функции, если поле пустое
+			} else {
+				$('#phoneInputError').hide(); // Скрываем сообщение об ошибке, если поле заполнено
+			}
+			if(phoneInput.length!=12){
+				$('#phoneCorrectlytError').show(); // Показываем сообщение об ошибке
+				console.log(phoneInput);
+				return;
+				
+			} else {
+				$('#phoneCorrectlytError').hide(); // Скрываем сообщение об ошибке, если поле заполнено
+			}
+
+			// Отправляем данные на сервер
+			$.post('@Url.Action("Create", "Appointment")', { serviceId: serviceId, masterId: masterId, nameInput: nameInput, phoneInput: phoneInput, selectedDateTime: selectedDateTime })
+				.done(function (response) {
+					Swal.fire({
+					position: "center",
+					background: '#343a40',
+					icon: "success",
+					title: "Ваша заявка приянта",
+					text: "Вы записаны на "+selectedDateTime,
+					showConfirmButton: false,	
+					allowOutsideClick: true,
+					timer: 5500,
+					timerProgressBar: true,
+					customClass: {
+						popup: 'sweatAlert',
+					}
+				}).then((result) => {
+					window.location.href = "/Home/Index";
+				});
+
+					console.log(response);
+				})
+				.fail(function (xhr, status, error) {
+					console.error(xhr.responseText);
+				});
+		});
+	});
+</script>

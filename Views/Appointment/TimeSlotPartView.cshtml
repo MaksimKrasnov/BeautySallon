@@ -1,0 +1,54 @@
+﻿
+<style>
+	inp:focus {
+		border-color: #B27658;
+		box-shadow: 0 0 0 0.2rem rgba(182, 152, 89, 0.8); /* добавление эффекта тени */
+	}
+	.noTime{
+		color:#fff;
+	}
+</style>
+@if (Model.Count > 0)
+{
+	<div class="container-fluid pt-2 bg-dark text-light">
+		<div class="row justify-content-center">
+			<div class="col-md-6 w-100">
+				<div class="card bg-dark text-light  border-0">
+					<div class="card-body  text-center">
+						<h3>Выберите время</h3>
+						<form id="timeSlotForm">
+							<select id="selectedDateTime" class="form-control mb-5 inp">
+								@foreach (var timeSlot in Model)
+								{
+									<option value="@timeSlot">@timeSlot.ToShortTimeString()</option>
+								}
+							</select>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<p class="noTime">На выбранный день нет доступных временных интервалов для записи.</p>
+	<br />
+	<p class="noTime">Выберите другую дату или другого мастера</p>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(function () {
+		$('#timeSlotForm').submit(function (event) {
+			event.preventDefault(); // Отменяем стандартное действие отправки формы
+			var selectedDateTime = $('#selectedDateTime').val();
+
+			// Обновляем скрытое поле в основной форме
+			$('#selectedDateTimeMain').val(selectedDateTime);
+
+			// Отправляем данные на сервер
+			$('#mainForm').submit();
+		});
+	});
+</script>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Service>
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="w-75 mt-5 align-items-center ">
+
+@foreach(var item in Model)
+    {
+        <a style=" text-decoration: none" asp-area="" asp-controller="Appointment" asp-action="Index" asp-route-id="@item.Id">
+    <div class=" ml p-0 align-content-center ">
+            <p class="textService">
+                @item.Name<br />
+         @item.Price р.</p>
+            <div style="clear: both;"></div>
+            <br />
+
+    </div>
+    </a>
+}
+</div>
+

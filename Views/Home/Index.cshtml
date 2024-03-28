@@ -1,0 +1,177 @@
+﻿@model ViewModel
+
+@{
+	ViewData["Title"] = "";
+}
+
+<div class="container-fluid  justify-content-between  bg-dark m-0 w-100">
+
+	<div class=" d-inline-flex">
+		<div class=" col text-m mt10">
+			<h1 class=" ">МЫ ЗНАЕМ ТОЛК<br /> В ГЕОМЕТРИИ КРАСОТЫ</h1>
+		</div>
+		<a class="nav-link" href="@Url.Action("Index", "Search")">
+			<div class="col ms-5 write-img">
+				<img class="ms-5 mt5 circle" src="https://static.tildacdn.com/tild3935-3164-4562-a266-386666646439/_.svg" />
+			</div>
+		</a>
+		<div class="col ">
+			<img class="women-img " src="https://static.tildacdn.com/tild3538-6466-4831-b730-356366663434/03dc5a6d4b8ed94d2db6.png" />
+		</div>
+	</div>
+</div>
+<div class="container-fluid  justify-content-between  bg-dark m-0 w-100">
+	<div class="row align-items-center d-flex w-100 ">
+		<hr class="ms-2" />
+		<div class="col ms-5 ps-5 pt-3 marquee">
+			<p class="text text-space">#МАНИКЮР #ПЕДИКЮР #ВИЗАЖ #ПРИЧЕСКИ #БРОВИ #РЕСНИЦЫ #МАКИЯЖ #ТАТУАЖ #CТРИЖКА #ОКРАШИВАНИЕ</p>
+		</div>
+		<hr class="ms-2" />
+	</div>
+
+
+	<div class="advantages">
+		<img src="https://static.tildacdn.com/tild3535-3530-4330-a538-393237663437/photo.svg" />
+	</div>
+	<div class="text-m mt1 mb-0">
+		<h1>Салон красоты ACCENT это</h1>
+	</div>
+
+
+
+	<div class="row m-5  align-items-center  text-center">
+		<div class="col-lg-4  ps-">
+			<img class="" src="https://static.tildacdn.com/tild3333-3831-4131-a237-376535336234/___11___.svg" />
+			<p class="text ">Профессиональные<br /> услуги в 11+ бьюти <br />направлениях</p>
+		</div>
+		<div class="col-lg-4  ps-5">
+			<img class="" src="https://static.tildacdn.com/tild6130-3364-4531-a536-643661336361/_____.svg" />
+			<p class="text ">Сервис премиум-класса<br /> по демократичным<br /> ценам</p>
+		</div>
+		<div class="col-lg-4  ps-5">
+			<img class="" src="https://static.tildacdn.com/tild6230-6233-4034-a139-633162336637/___.svg" />
+			<p class="text">Абсолютная <br />стерильность<br /> и безопасность </p>
+		</div>
+	</div>
+
+
+
+	<div class="row m-5  align-items-center  text-center">
+		<div class="col-lg-4  ps-">
+			<img class="" src="https://static.tildacdn.com/tild3335-3864-4262-b663-616361646432/______.svg" />
+			<p class="text ">Бесплатный чай, кофе<br /> и конфеты для <br />клиентов</p>
+		</div>
+		<div class="col-lg-4  ps-5">
+			<img class="" src="https://static.tildacdn.com/tild3231-6439-4033-a361-326335366535/7_____600___.svg" />
+			<p class="text ">7 лет опыта<br /> и 600+ довольных<br /> клиентов</p>
+		</div>
+		<div class="col-lg-4  ps-5">
+			<img class="" src="https://static.tildacdn.com/tild3063-6266-4035-b362-626162366161/_____.svg" />
+			<p class="text">Умение подчеркивать <br />естественную красоту<br /> каждого человека </p>
+		</div>
+		<div class="line mt10"></div>
+		<div class="col-lg-4 mx-auto w-75 m-5 ps-5">
+			<p class="text-adv">Хотите идеальные брови, шикарные ресницы, ухоженные руки, великолепный вечерний макияж и локоны? Желаете выглядеть не хуже голливудской звезды, затратив минимум косметики и времени на подводку глаз и нанесение помады? Тогда вам точно к нам </p>
+		</div>
+		<div class="line "></div>
+
+
+
+	</div>
+
+	<div class="advantages mb-3">
+		<img src="https://static.tildacdn.com/tild3961-6639-4032-b866-623131336437/photo.svg" />
+	</div>
+	<form class="container-fluid d-inline-flex justify-content-between  bg-dark ml10 w-75">
+		@foreach (var services in Model.Services)
+		{
+			<div class="ps-2">
+				<button type="button" class="buttonService bg-dark @(services.Id == Model.Services.First().Id ? "active" : "")" data-id="@services.Id">@services.Name</button>
+			</div>
+		}
+	</form>
+
+	<div id="textContainer">
+		<!-- Здесь будет отображаться частичное представление -->
+	</div>
+
+
+	<div class="advantages">
+		<img src="https://static.tildacdn.com/tild6336-3034-4665-b062-323537613733/_.svg" />
+	</div>
+	<div class="text-m mt1 mb-0">
+		<h1>
+			Подчеркиваем геометрию красоты <br /> в атмосфере уюта в самом центре Барнаула
+		</h1>
+	</div>
+
+
+	<div class="row m-5  align-items-center text-center">
+		<div class="col-lg-4 mx-auto  ps-5 pe-0">
+			<img class="" src="https://static.tildacdn.com/tild3535-6461-4331-a232-393161383839/1.png" />
+		</div>
+		<div class="col-lg-4 mx-auto p-0 ">
+			<img class="accent-img" src="https://static.tildacdn.com/tild3234-6565-4234-a232-313566363062/9a4506874e438bc15f98.png" />
+		</div>
+		<div class="col-lg-4 mx-auto  pe-5 ps-0">
+			<img class="" src="https://static.tildacdn.com/tild3365-3335-4161-a265-666135316138/3.png" />
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-lg-4  ">
+			<img style="margin-left:25%" src="https://static.tildacdn.com/tild6531-6334-4132-b761-653437393235/4.png" />
+		</div>
+		<div class="col-lg-4 w-50" style=" margin-left:13%">
+			<h3>Мы знаем толк в геометрии красоты</h3>
+			<p class=" text-adv">
+				Accent - современная студия красоты с уютной атмосферой и большим разнообразием услуг. В нашей студии Вы можете получить услуги премиум класса по демократичным ценам.
+				Наш дружелюбный персонал всегда ждет Вас, а расположение в центре города позволяет Вам сэкономить свое драгоценное время на дороге.
+			</p>
+		</div>
+
+	</div>
+	<div class="advantages">
+		<img src="https://static.tildacdn.com/tild3633-6235-4763-b138-313665333531/photo.svg" />
+	</div>
+	<div class="text-m mt1 mb-0">
+		<h1>
+			Как до нас добраться
+		</h1>
+	</div>
+
+	<div class="row m-5  align-items-center text-center">
+		<div class="col-lg-4 mx-auto  ps-5 pe-0">
+			<h4>8912-345-67-89</h4>
+			<h4>accent.accent@yandex.ru</h4>
+			<h4>г.Барнаул, Ленина, 1А</h4>
+
+		</div>
+		<div class="col-lg-4 mx-auto p-0 ">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2382.7100838863416!2d83.79245507688331!3d53.33054407590562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42dda5cc5ee6c8c5%3A0xd6cfad05b9c6d0ab!2z0L_RgC4g0JvQtdC90LjQvdCwLCAx0JAsINCR0LDRgNC90LDRg9C7LCDQkNC70YLQsNC50YHQutC40Lkg0LrRgNCw0LksIDY1NjA1Ng!5e0!3m2!1sru!2sru!4v1708579889726!5m2!1sru!2sru" width="600" height="450" style="margin-left:10% border:2px ;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+
+	</div>
+</div>
+
+<div class="container-fluid  justify-content-between  bg-dark m-0 w-100">
+</div>
+<!-- HoverSignal -->
+<script type="text/javascript">
+	(function (d, w) {
+		var n = d.getElementsByTagName("script")[0],
+			s = d.createElement("script"),
+			f = function () { n.parentNode.insertBefore(s, n); };
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = "https://app.hoversignal.com/Api/Script/0610a743-419c-4da6-8b43-352e198a6797";
+		if (w.opera == "[object Opera]") {
+			d.addEventListener("DOMContentLoaded", f, false);
+		} else { f(); }
+	})(document, window);
+</script>
+<!-- /Hoversignal -->
+<script src="~/js/HomeConroller.js"></script>
+
+

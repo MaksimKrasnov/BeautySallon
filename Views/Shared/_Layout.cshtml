@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]  Accent</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/MainPage.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/PartialView.css" asp-append-version="true" />
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/BeautySaloon.styles.css" asp-append-version="true" />
+	<link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Forum&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<style>
+
+	</style>
+	<header class="sticky-top mb-0">
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow mb-0">
+			<div class="container bg-dark justify-content-between ">
+				<div class="row align-items-center d-flex w-100 ">
+					<div class="col-lg-4 ps-5">
+						<a class="nav-link" href="@Url.Action("Index", "Home")">
+							<img src="https://static.tildacdn.com/tild6465-6432-4263-a332-313565363232/logo.png" class="logo img-fluid" alt="Логотип">
+						</a>
+					</div>
+					<div class="d-flex col-lg-4 text-center text-light w-50">
+						<img class="me-1" src="https://static.tildacdn.com/tild3837-6461-4262-a136-643661653262/photo.svg" />
+						<div class="pt-3 me-5">
+							<p>г.Барнаул, Ленина, 1А</p>
+						</div>
+						<img class="me-1" src="https://static.tildacdn.com/tild6366-3938-4233-a263-353962623137/photo.svg" />
+						<div class="pt-3">
+							<p>+7912-345-67-89</p>
+
+						</div>
+						<div class="ms-5 pt-3">
+							<a href="#" class="underline" data-bs-toggle="modal" data-bs-target="#myModal"><p class="text-color">Заказать звонок</p></a>
+						</div>
+					</div>
+					<div class="d-flex col-lg-4 text-end text-light w-auto me-2">
+						<a class="nav-link" href="@Url.Action("Index", "Search")">
+							<button class="btn btn-outline-dark text-light button-color">Онлайн запись</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+
+	</header>
+
+	<main role="main" class="bg-dark">
+		@RenderBody()
+	</main>
+
+	<footer class="footer text-muted mt-5">
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow mb-0">
+			<div class="container bg-dark justify-content-between ">
+				<div class="row align-items-center d-flex w-100 ">
+					<div class="col-lg-4 ps-5">
+						<img src="https://static.tildacdn.com/tild3164-3238-4265-b361-366364393936/logo.svg" class="logo img-fluid" alt="Логотип">
+					</div>
+					<div class="d-flex col-lg-4 text-center text-light w-50">
+						<img class="me-1" src="https://static.tildacdn.com/tild3837-6461-4262-a136-643661653262/photo.svg" />
+						<div class="pt-3 me-5">
+							<p>г.Барнаул, Ленина, 1А</p>
+						</div>
+						<img class="me-1" src="https://static.tildacdn.com/tild6366-3938-4233-a263-353962623137/photo.svg" />
+						<div class="pt-3">
+							<p>+7912-345-67-89</p>
+
+						</div>
+						<div class="ms-5 pt-3">
+							<a href="#" class="underline" data-bs-toggle="modal" data-bs-target="#myModal"><p class="text-color">Заказать звонок</p></a>
+						</div>
+					</div>
+					<div class="d-flex col-lg-4 text-end text-light w-auto">
+						<button class="btn btn btn-outline-dark text-light button-color" type="submit">Онлайн запись</button>
+					</div>
+
+				</div>
+			</div>
+		</nav>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+<style>
+	.modal-window {
+		background-color: #da9471;
+		margin-top: 20%;
+		height: 70%;
+		width: 100%;
+		font-family: 'Forum',Arial,sans-serif;
+	}
+
+	.h {
+		height: 80%;
+	}
+
+	.modal-window:hover {
+		border: none;
+	}
+
+	.window-input {
+		border: 2px solid #fff;
+		margin-bottom: 5%;
+		background-color: #da9471;
+		height: 20%;
+		border-radius: 4px;
+		outline: none;
+	}
+
+	.window-button {
+		height: 20%;
+	}
+</style>
+<div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog h">
+		<div class="modal-content modal-window">
+			<div class="modal-header">
+				<h5 class="modal-title ms-5 ps-3 mt-2" id="exampleModalLabel">Оставьте заявку и мы вам перезвоним</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<input type="text" id="nameInput" placeholder="Имя" class="w-100 window-input" />
+				<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
+
+				<br />
+				<input type="text" id="phoneInput" placeholder="Телефон" class="w-100 window-input" />
+				<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым</div>
+
+				<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+
+				<br />
+				<button id="submitBtn" class="w-100 mt-3 window-button">Оставить заявку</button>
+
+			</div>
+			<div class="modal-footer">
+				<p>*Ваши данные в безопасности и не будут переданы третьим лицам</p>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="~/js/site.js"></script>
