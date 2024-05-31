@@ -250,6 +250,5 @@ C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\ru\Microsoft.CodeAnalysis.Workspac
 C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\Npgsql.dll
-C:\AspNet\Azure\BeautySaloon\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\AspNet\Azure\BeautySaloon\obj\Debug\net7.0\BeautySa.6DB18FD6.Up2Date
+C:\AspNet\Azure\BeautySaloon\obj\Debug\net7.0\BeautySaloon.sourcelink.json

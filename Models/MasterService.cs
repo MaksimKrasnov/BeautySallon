@@ -8,7 +8,7 @@
 
 		public int ServiceId { get; set; }
 		public Service Service { get; set; }
-		public Appointment Appointment { get; set; }
 
+		public Appointment Appointment { get; set; }
 	}
 }

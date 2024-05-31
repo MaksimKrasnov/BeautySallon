@@ -27,7 +27,7 @@ namespace BeautySaloon.Email
             _smtpClient.Port = smtpPort;
         }
 
-        public void SendMail(string targetEmail, string topic, string content)
+        public async Task SendMail(string targetEmail, string topic, string content)
         {
          
             _smtpClient.Send(_mailAppLogin, targetEmail, topic, content);

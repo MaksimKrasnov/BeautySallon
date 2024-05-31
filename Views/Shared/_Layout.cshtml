@@ -24,6 +24,10 @@
 	</style>
 	<header class="sticky-top mb-0">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow mb-0">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 			<div class="container bg-dark justify-content-between ">
 				<div class="row align-items-center d-flex w-100 ">
 					<div class="col-lg-4 ps-5">
@@ -50,6 +54,23 @@
 							<button class="btn btn-outline-dark text-light button-color">Онлайн запись</button>
 						</a>
 					</div>
+					<div class="d-flex col-lg-4 text-end text-light w-auto me-2">
+						@if (User?.Identity?.IsAuthenticated== true)
+						{
+							<a class="nav-link" href="@Url.Action("Index", "Account")">
+								<button class="btn btn-outline-dark text-light button-color">Личный кабинет</button>
+							</a>
+						}
+						else
+						{
+							<a class="nav-link" href="@Url.Action("Index", "Login")">
+								<button class="btn btn-outline-dark text-light button-color">Войти</button>
+							</a>
+						}
+						<form asp-action="Logout" asp-controller="Login" method="post" class="form-inline">
+							<button type="submit" class="btn btn-outline-dark text-light button-color">Выйти</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -61,7 +82,7 @@
 		@RenderBody()
 	</main>
 
-	<footer class="footer text-muted mt-5">
+	<footer class="sticky-bottom footer text-muted mt-5">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow mb-0">
 			<div class="container bg-dark justify-content-between ">
 				<div class="row align-items-center d-flex w-100 ">

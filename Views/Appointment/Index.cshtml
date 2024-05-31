@@ -1,5 +1,7 @@
 ﻿@model Service;
-
+@{
+    ViewBag.Title = "Index";
+}
 <style>
 	.signUp {
 		background-color: #B27658;
@@ -66,14 +68,26 @@
 	<div class="modal-body">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
+				@if (User?.Identity?.IsAuthenticated == true)
+				{
+					<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp" value="@ViewBag.Name" />
 
-				<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp" />
-				<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
-				<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp" />
-				<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым</div>
+					<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
+					<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp" value="@ViewBag.PhoneNumber" />
+					<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым </div>
 
-				<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+					<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+				}
+				else
+				{
+					<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp"  />
 
+					<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
+					<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp"  />
+					<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым </div>
+
+					<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+				}
 
 				<div id="timeSlots" class="row justify-content-center">
 					<!-- Здесь будет отображаться частичное представление -->
@@ -92,8 +106,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <script>
+
 	$(function () {
 		$('#datepicker').change(function () {
 			var selectedDate = $(this).val(); // Получаем выбранную дату
