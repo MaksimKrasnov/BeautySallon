@@ -7,7 +7,7 @@ namespace BeautySaloon.Models
 	{
 		public int Id { get; set; }
 
-		[EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
+		//[EmailAddress(ErrorMessage = "Неверный формат адреса электронной почты")]
 		public string Email { get; set; }
 		public string Name { get; set; }
 		public string Password { get; set; }

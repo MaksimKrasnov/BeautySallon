@@ -1,4 +1,5 @@
 ﻿using BeautySaloon.Models;
+using BeautySaloon.Repositoryes.Login;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -10,11 +11,11 @@ namespace BeautySaloon.Controllers
 {
 	public class LoginController : Controller
 	{
-		private readonly ApplicationDbContext db;
+		private readonly ILoginRepository _loginRepository;
 
-		public LoginController(ApplicationDbContext context)
+		public LoginController(ILoginRepository loginRepository)
 		{
-			db = context;
+			_loginRepository = loginRepository;
 		}
 		// GET: LoginController
 		public ActionResult Index()
@@ -22,22 +23,19 @@ namespace BeautySaloon.Controllers
 			return View();
 		}
 
-		
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Index(LoginModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				User? user = await db.User
-					.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+				User? user = await _loginRepository.GetUserByEmailAndPasswordAsync(model.Email, model.Password);
 				if (user != null)
 				{
 					await Authenticate(user);
-					
-					
-						return RedirectToAction("Index", "Home");
-					
+
+					return RedirectToAction("Index", "Home");
 				}
 				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			}

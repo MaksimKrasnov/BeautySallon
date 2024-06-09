@@ -45,12 +45,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BeautySaloon.Models;
-using BeautySaloon.Repositories;
 using BeautySaloon.Repositoryes;
+using BeautySaloon.Repositoryes.Home;
 
 namespace BeautySaloon.Controllers
 {
-	public class HomeController : Controller
+    public class HomeController : Controller
 	{
 		private readonly IHomeRepository homeRepository;
 

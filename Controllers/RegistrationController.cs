@@ -5,18 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Claims;
+using BeautySaloon.Repositoryes.Registration;
 
 namespace BeautySaloon.Controllers
 {
     public class RegistrationController : Controller
     {
-        private readonly ApplicationDbContext db;
+		private readonly IRegistrationRepository _registrationRepository;
 
-        public RegistrationController(ApplicationDbContext _db)
-        {
-            db = _db;
-        }
-        public IActionResult Index()
+		public RegistrationController(IRegistrationRepository registrationRepository)
+		{
+			_registrationRepository = registrationRepository;
+		}
+		public IActionResult Index()
         {
             return View();
         }
@@ -26,18 +27,18 @@ namespace BeautySaloon.Controllers
         {
             if (ModelState.IsValid)
             {
-                User? user = await db.User.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+				User? user = await _registrationRepository.GetUserByEmailAsync(model.Email);
+				if (user == null)
                 {
                     // добавляем пользователя в бд
                     user = new User { Email = model.Email, Password = model.Password, PhoneNumber = model.PhoneNumber, Name = model.Name };
-                    
 
 
-                    db.User.Add(user);
-                    await db.SaveChangesAsync();
 
-                    await Authenticate(user); // аутентификация
+					await _registrationRepository.AddUserAsync(user);
+
+
+					await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }

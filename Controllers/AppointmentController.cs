@@ -98,20 +98,16 @@
 
 //	}
 //}
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BeautySaloon.Models;
-using BeautySaloon.Repositories;
-using BeautySaloon.Repositoryes;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using NuGet.Packaging.Rules;
+using BeautySaloon.Repositoryes.AppointmentRep;
+using System.Globalization;
 
 namespace BeautySaloon.Controllers
 {
-	public class AppointmentController : Controller
+    public class AppointmentController : Controller
 	{
 		private readonly ApplicationDbContext _db;
 
@@ -153,7 +149,9 @@ namespace BeautySaloon.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(int serviceId, int masterId, string nameInput, string phoneInput, DateTime selectedDateTime)
 		{
-			if (selectedDateTime == DateTime.MinValue)
+			var normalDate = ConvertTo24HourFormat(selectedDateTime.ToString());
+
+			if (normalDate == DateTime.MinValue)
 			{
 				return BadRequest("Выберите корректную дату и время.");
 			}
@@ -166,7 +164,7 @@ namespace BeautySaloon.Controllers
 			{
 				try
 				{
-					await _appointmentRepository.CreateAppointment(serviceId, masterId, nameInput, phoneInput, userId, selectedDateTime);
+					await _appointmentRepository.CreateAppointment(serviceId, masterId, nameInput, phoneInput, userId, normalDate);
 					return Ok();
 				}
 				catch (Exception ex)
@@ -175,6 +173,18 @@ namespace BeautySaloon.Controllers
 				}
 			}
 			return BadRequest("Не заполнены поля");
+		}
+		public static DateTime ConvertTo24HourFormat(string dateInput)
+		{
+			DateTime dateTime;
+			if (DateTime.TryParseExact(dateInput, "yyyy-MM-dd hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+			{
+				return dateTime;
+			}
+			else
+			{
+				return Convert.ToDateTime(dateInput);
+			}
 		}
 	}
 }

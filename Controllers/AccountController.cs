@@ -1,5 +1,5 @@
 ﻿using BeautySaloon.Models;
-using BeautySaloon.Repositories;
+using BeautySaloon.Repositoryes;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -7,37 +7,30 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using BeautySaloon.Repositoryes;
+using BeautySaloon.Repositoryes.Account;
 
 namespace BeautySaloon.Controllers
 {
-	public class AccountController : Controller
+    public class AccountController : Controller
 	{
-		private readonly ApplicationDbContext _db;
 
-		private readonly IAccoutRepository _accountRepository;
+		private readonly IAccountRepository _accountRepository;
 
 		
 
-		public AccountController(IAccoutRepository repository, ApplicationDbContext db)
+		public AccountController(IAccountRepository repository)
 		{
 			_accountRepository = repository;
-			_db = db;
 
 		}
 		public async Task<ActionResult> Index()
 		{
-			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+			var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-			//var name = User.FindFirstValue("Name");
-			//var phoneNumber = User.FindFirstValue("PhoneNumber");
-			//var email = User.FindFirstValue(ClaimTypes.Email);
+		
 			var name = User.FindFirstValue(ClaimTypes.GivenName);
 			var phoneNumber = User.FindFirstValue(ClaimTypes.MobilePhone);
 			var email = User.FindFirstValue(ClaimTypes.Email);
-			// Используйте значения по вашему усмотрению
-			// Например, передайте их в представление
-
 			ViewBag.UserId = userId;
 			ViewBag.Name = name;
 			ViewBag.PhoneNumber = phoneNumber;
@@ -50,7 +43,7 @@ namespace BeautySaloon.Controllers
 		{
 			// Получение текущего пользователя
 			var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-			var user = await _db.User.FindAsync(userId);
+			var user = await _accountRepository.FindUserByIdAsync(userId);
 
 			if (user == null)
 			{
@@ -60,11 +53,10 @@ namespace BeautySaloon.Controllers
 			// Обновление полей пользователя
 			user.Name = Name;
 			user.Email = Email;
-			user.PhoneNumber = Phone;
+			user.PhoneNumber = Phone.Replace(" ", "");
 
 			// Сохранение изменений в базе данных
-			_db.Update(user);
-			await _db.SaveChangesAsync();
+			await _accountRepository.UpdateUserAsync(user);
 			await UpdateUserClaims(user);
 			// Перенаправление на другую страницу
 			return RedirectToAction("Index", "Account");
@@ -75,7 +67,7 @@ namespace BeautySaloon.Controllers
 
 
 			var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-			var user = await _db.User.FindAsync(userId);
+			var user = await _accountRepository.FindUserByIdAsync(userId);
 			if (user == null)
 			{
 				return NotFound();
@@ -83,9 +75,8 @@ namespace BeautySaloon.Controllers
 
 			user.Password = NewPassword;
 
-
+			await _accountRepository.UpdateUserAsync(user);
 			await UpdateUserClaims(user);
-			await _db.SaveChangesAsync();
 			return RedirectToAction("Index", "Account");
 
 
@@ -94,12 +85,12 @@ namespace BeautySaloon.Controllers
 		private async Task UpdateUserClaims(User user)
 		{
 			var claims = new List<Claim>
-	{
-		new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-		new Claim(ClaimTypes.GivenName, user.Name),
-		new Claim(ClaimTypes.Email, user.Email),
-		new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? "")
-	};
+				{
+					new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+					new Claim(ClaimTypes.GivenName, user.Name),
+					new Claim(ClaimTypes.Email, user.Email),
+					new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? "")
+				};
 
 			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
 				  ClaimsIdentity.DefaultRoleClaimType);
@@ -109,20 +100,8 @@ namespace BeautySaloon.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DeleteAppointment(int id)
 		{
-			var appointmentToDelete = await _db.Appointment
-				.FindAsync(id);
-
-			if (appointmentToDelete != null)
-			{
-				_db.Appointment.Remove(appointmentToDelete);
-				_db.SaveChanges();
-				return RedirectToAction("Index", "Account");
-
-			}
-			else
-			{
-				return BadRequest();
-			}
+			await _accountRepository.DeleteAppointmentAsync(id);
+			return RedirectToAction("Index", "Account");
 		}
 	}
 }

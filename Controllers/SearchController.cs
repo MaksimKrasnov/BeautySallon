@@ -39,12 +39,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BeautySaloon.Models;
-using BeautySaloon.Repositories;
 using BeautySaloon.Repositoryes;
+using BeautySaloon.Repositoryes.Search;
 
 namespace BeautySaloon.Controllers
 {
-	public class SearchController : Controller
+    public class SearchController : Controller
 	{
 		private readonly ISearchRepository _searchRepository;
 

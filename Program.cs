@@ -1,11 +1,17 @@
 using BeautySaloon.Controllers;
 using BeautySaloon.Email;
 using BeautySaloon.Models;
-using BeautySaloon.Repositories;
-using BeautySaloon.Repositoryes;
+using BeautySaloon.Repositoryes.Account;
+using BeautySaloon.Repositoryes.AppointmentRep;
+using BeautySaloon.Repositoryes.Home;
+using BeautySaloon.Repositoryes.Login;
+using BeautySaloon.Repositoryes.Registration;
+using BeautySaloon.Repositoryes.Search;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IAppointmentRepository,AppointmentRepository>();
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<ISearchRepository, SearchRepository>();
-builder.Services.AddScoped<IAccoutRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
 	AddCookie(options =>
@@ -28,6 +38,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
 	options.LoginPath = "/Login/Index";
 	options.AccessDeniedPath = "/Login/AccessDenied";
+});
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+	var supportedCultures = new[] { new CultureInfo("ru-RU") };
+	options.DefaultRequestCulture = new RequestCulture("ru-RU");
+	options.SupportedCultures = supportedCultures;
+	options.SupportedUICultures = supportedCultures;
 });
 var app = builder.Build();
 

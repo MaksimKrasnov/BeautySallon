@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\BeautySaloon.bundle.scp.css"
     },
     {
+      "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\css\\Account.css",
+      "PackagePath": "staticwebassets\\css\\Account.css"
+    },
+    {
+      "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\css\\Appointment.css",
+      "PackagePath": "staticwebassets\\css\\Appointment.css"
+    },
+    {
+      "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\css\\LoginAndRegistration.css",
+      "PackagePath": "staticwebassets\\css\\LoginAndRegistration.css"
+    },
+    {
       "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\css\\MainPage.css",
       "PackagePath": "staticwebassets\\css\\MainPage.css"
     },
@@ -263,6 +275,10 @@
     {
       "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\web.config",
+      "PackagePath": "staticwebassets\\web.config"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.BeautySaloon.Microsoft.AspNetCore.StaticWebAssets.props",

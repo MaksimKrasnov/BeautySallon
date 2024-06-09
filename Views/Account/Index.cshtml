@@ -3,67 +3,7 @@
 @{
 
 }
-<style>
-	/* Основные стили для полной высоты страницы */
-
-
-	/* Контейнер для основного содержимого страницы */
-	.main-container {
-		min-height: 100%;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow-y: auto;
-	}
-
-	/* Стили для формы */
-	.container-fluid {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		margin-left: 10px;
-		width: 75%;
-		padding: 20px; /* Можно настроить по вашему усмотрению */
-	}
-
-	/* Стили для кнопок */
-	.form-container {
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	}
-
-	.form-control {
-		width: 50%;
-		border-radius: 15px;
-		padding: 5px;
-	}
-
-	.sections {
-		color: #da9471;
-		border: 0;
-		font-size: 32px;
-		font-family: 'Forum',Arial,sans-serif;
-		cursor: pointer;
-	}
-
-	.text24 {
-		color: #ffffff;
-		font-size: 24px;
-	}
-
-	.text21 {
-		color: #da9471;
-		font-size: 21px;
-	}
-	.tableColor{
-		color:#ffffff;
-	}
-	td{
-		color: #ffffff;
-	}
-</style>
+<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
 
 
 <div class="container-fluid  justify-content-between  bg-dark m-0 w-100">
@@ -131,7 +71,7 @@
 			@foreach (var appointment in Model)
 			{
 				<tr>
-				
+
 					<td>@appointment.DateTime.ToString("g")</td>
 					<td>@appointment.MasterService?.Master?.Name </td>
 					<td>@appointment.MasterService?.Service?.Name </td>
@@ -164,7 +104,7 @@
 
 
 
-
+@*
 <div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -191,8 +131,39 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> *@
+<div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editInfoModalLabel">Редактировать личную информацию</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="editInfoForm" method="post" action="/Account/EditInfo">
+					<div class="mb-3">
+						<label for="name" class="form-label">Имя</label>
+						<input type="text" class="form-control" id="nameInputLK" name="Name" value="@ViewBag.Name" required>
+						<div class="invalid-feedback" id="nameInputError">Имя не может быть пустым.</div>
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">Email</label>
+						<input type="email" class="form-control" id="email" name="Email" value="@ViewBag.Email" required>
+					</div>
+					<div class="mb-3">
+						<label for="phone" class="form-label">Телефон</label>
+						<input type="tel" class="form-control" id="phoneInputLK" name="Phone" value="@ViewBag.PhoneNumber" required>
+						<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым </div>
 
+						<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
+
+					</div>
+					<button type="submit" class="btn btn-primary">Сохранить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -228,5 +199,66 @@
 			event.preventDefault();
 			document.getElementById("passwordError").classList.remove("d-none");
 		}
+	});
+	$(document).ready(function () {
+		$('#nameInput').on('input', function () {
+			var nameInputLK = $(this).val().trim();
+			if (nameInputLK !== '') {
+				$('#nameInputError').hide();
+				$(this).removeClass('is-invalid');
+			} else {
+				$('#nameInputError').show();
+				$(this).addClass('is-invalid');
+			}
+		});
+		$('#phoneInputLK').on('input', function () {
+			var value = this.value.replace(/\D/g, ''); // Удаление всех символов, кроме цифр
+			if (value.length > 11) { // Ограничение на количество цифр
+				value = value.slice(0, 11);
+			}
+			this.value = '+7 ' + value.slice(1); // Добавление префикса +7 и введенных цифр
+			if (phoneInputLK !== '' || phoneInput.length == 12) { // Если поле не пустое, скрываем сообщение об ошибке
+				$('#phoneInputError').hide();
+			}
+		});
+
+		$('#editInfoForm').on('submit', function (event) {
+			var isValid = true;
+
+			// Validate Name
+			var nameInputLK = $('#nameInputLK').val().trim();
+			if (nameInputLK === '') {
+				$('#nameInputError').show();
+				$('#nameInputLK').addClass('is-invalid');
+				isValid = false;
+			} else {
+				$('#nameInputError').hide();
+				$('#nameInputLK').removeClass('is-invalid');
+			}
+
+			// Validate Phone
+			var phoneInputLK = $('#phoneInputLK').val().replaceAll(' ', '');
+
+			if (phoneInputLK === '') { // Проверяем, не пустое ли поле
+				$('#phoneInputError').show(); // Показываем сообщение об ошибке
+				 isValid = false; // Останавливаем выполнение функции, если поле пустое
+			} else {
+				$('#phoneInputError').hide(); // Скрываем сообщение об ошибке, если поле заполнено
+			}
+			if (phoneInputLK.length != 12) {
+				$('#phoneCorrectlytError').show(); // Показываем сообщение об ошибке
+				console.log(phoneInputLK+"false");
+				console.log(phoneInputLK.length);
+
+				isValid = false;
+				
+
+			} else {
+				$('#phoneCorrectlytError').hide(); // Скрываем сообщение об ошибке, если поле заполнено
+			}
+			if (!isValid) {
+				event.preventDefault();
+			}
+		});
 	});
 </script>

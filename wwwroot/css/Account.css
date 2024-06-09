@@ -1,0 +1,61 @@
+﻿
+/* Основные стили для полной высоты страницы */
+/* Контейнер для основного содержимого страницы */
+.main-container {
+    min-height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Стили для формы */
+.container-fluid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+    width: 75%;
+    padding: 20px; /* Можно настроить по вашему усмотрению */
+}
+
+/* Стили для кнопок */
+.form-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+    width: 50%;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.sections {
+    color: #da9471;
+    border: 0;
+    font-size: 32px;
+    font-family: 'Forum',Arial,sans-serif;
+    cursor: pointer;
+}
+
+.text24 {
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.text21 {
+    color: #da9471;
+    font-size: 21px;
+}
+
+.tableColor {
+    color: #ffffff;
+}
+
+td {
+    color: #ffffff;
+}
+

@@ -2,27 +2,8 @@
 @{
     ViewBag.Title = "Index";
 }
-<style>
-	.signUp {
-		background-color: #B27658;
-		border: none;
-	}
+<link rel="stylesheet" href="~/css/Appointment.css" asp-append-version="true" />
 
-		.signUp:hover {
-			background-color: #B27658;
-			opacity: 0.5;
-		}
-		
-		.signUp:focus {
-			border-color: #B27658;
-			box-shadow: 0 0 0 0.1rem rgba(182, 152, 89, 0.8); 
-		}
-
-	.inp:focus {
-		border-color: #B27658;
-		box-shadow: 0 0 0 0.1rem rgba(182, 152, 89, 0.8);
-	}
-</style>
 <div class="container-fluid pt-5 bg-dark text-light">
 	<div class="row justify-content-center">
 		<div class="col-md-6">
@@ -156,7 +137,7 @@
 			var phoneInput = $('#phoneInput').val().replaceAll(' ', '');
 			var selectedDateTime = $('#selectedDateTime').val();
 			var masterId = $('#masterSelect').val();
-
+			console.log(selectedDateTime);
 			if (nameInput === '') { // Проверяем, не пустое ли поле
 				$('#nameInputError').show(); // Показываем сообщение об ошибке
 				return; // Останавливаем выполнение функции, если поле пустое

@@ -9,6 +9,9 @@
 	<link rel="stylesheet" href="~/css/MainPage.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/PartialView.css" asp-append-version="true" />
 
+
+
+
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -20,8 +23,44 @@
 
 <body>
 	<style>
+		header .container {
+			display: flex;
+			align-items: center;
+		}
 
-	</style>
+		header .row {
+			flex-wrap: nowrap;
+			width: 100%;
+		}
+
+			header .row > div {
+				flex: 1;
+				text-align: center;
+			}
+
+		/* Стили для логотипа */
+		header .logo {
+			max-width: 100%;
+			height: auto;
+		}
+
+		/* Стили для контактной информации */
+		header .text-light p {
+			margin-bottom: 0;
+		}
+
+		/* Стили для кнопок */
+		header .button-color {
+			margin-left: 10px;
+		}
+
+		/* Дополнительные стили для лучшего выравнивания */
+		header .navbar-nav {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	</style>@* 
 	<header class="sticky-top mb-0">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark  box-shadow mb-0">
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -45,16 +84,16 @@
 							<p>+7912-345-67-89</p>
 
 						</div>
-						<div class="ms-5 pt-3">
+						<div class="ms-3 pt-3">
 							<a href="#" class="underline" data-bs-toggle="modal" data-bs-target="#myModal"><p class="text-color">Заказать звонок</p></a>
 						</div>
 					</div>
-					<div class="d-flex col-lg-4 text-end text-light w-auto me-2">
+					<div class="d-flex col-lg-4 text-end text-light w-auto ">
 						<a class="nav-link" href="@Url.Action("Index", "Search")">
 							<button class="btn btn-outline-dark text-light button-color">Онлайн запись</button>
 						</a>
 					</div>
-					<div class="d-flex col-lg-4 text-end text-light w-auto me-2">
+					<div class="d-flex col-lg-4 text-end text-light w-auto ">
 						@if (User?.Identity?.IsAuthenticated== true)
 						{
 							<a class="nav-link" href="@Url.Action("Index", "Account")">
@@ -67,16 +106,65 @@
 								<button class="btn btn-outline-dark text-light button-color">Войти</button>
 							</a>
 						}
-						<form asp-action="Logout" asp-controller="Login" method="post" class="form-inline">
-							<button type="submit" class="btn btn-outline-dark text-light button-color">Выйти</button>
-						</form>
+						
 					</div>
 				</div>
 			</div>
 		</nav>
 
 
-	</header>
+	</header> *@
+ 	<header class="sticky-top mb-0">
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow mb-0">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="container bg-dark justify-content-between">
+				<div class="row align-items-center d-flex w-100">
+					<div class="col-lg-2 ps-1 d-flex align-items-center">
+						<a class="nav-link" href="@Url.Action("Index", "Home")">
+							<img src="https://static.tildacdn.com/tild6465-6432-4263-a332-313565363232/logo.png" class="logo img-fluid" alt="Логотип">
+						</a>
+					</div>
+					<div class="d-flex col-lg-6 text-center text-light justify-content-between">
+						<div class="d-flex align-items-center">
+							<img class="me-1" src="https://static.tildacdn.com/tild3837-6461-4262-a136-643661653262/photo.svg" />
+							<div class="pt-3 me-5">
+								<p>г.Барнаул, Ленина, 1А</p>
+							</div>
+						</div>
+						<div class="d-flex align-items-center">
+							<img class="me-1" src="https://static.tildacdn.com/tild6366-3938-4233-a263-353962623137/photo.svg" />
+							<div class="pt-3">
+								<p>+7912-345-67-89</p>
+							</div>
+						</div>
+						<div class="ms-5 pt-3">
+							<a href="#" class="underline" data-bs-toggle="modal" data-bs-target="#myModal"><p class="text-color">Заказать звонок</p></a>
+						</div>
+					</div>
+					<div class="d-flex col-lg-4 text-end text-light ms-5 justify-content-between">
+						<a class="nav-link" href="@Url.Action("Index", "Search")">
+							<button class="btn btn-outline-dark text-light button-color">Онлайн запись</button>
+						</a>
+						@if (User?.Identity?.IsAuthenticated == true)
+						{
+							<a class="nav-link" href="@Url.Action("Index", "Account")">
+								<button class="btn btn-outline-dark text-light button-color">Личный кабинет</button>
+							</a>
+						}
+						else
+						{
+							<a class="nav-link" href="@Url.Action("Index", "Login")">
+								<button class="btn btn-outline-dark text-light button-color">Войти</button>
+							</a>
+						}
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header> 
 
 	<main role="main" class="bg-dark">
 		@RenderBody()
@@ -96,7 +184,7 @@
 						</div>
 						<img class="me-1" src="https://static.tildacdn.com/tild6366-3938-4233-a263-353962623137/photo.svg" />
 						<div class="pt-3">
-							<p>+7912-345-67-89</p>
+							<p>+7 912 345 67 89</p>
 
 						</div>
 						<div class="ms-5 pt-3">
@@ -104,7 +192,9 @@
 						</div>
 					</div>
 					<div class="d-flex col-lg-4 text-end text-light w-auto">
+						<a class="nav-link" href="@Url.Action("Index", "Search")">
 						<button class="btn btn btn-outline-dark text-light button-color" type="submit">Онлайн запись</button>
+						</a>
 					</div>
 
 				</div>
