@@ -23,7 +23,7 @@ namespace BeautySaloon.Controllers
 			_accountRepository = repository;
 
 		}
-		public async Task<ActionResult> Index()
+		public async Task<ActionResult> Index() //Основная страница, получаем данные о пользователе и его записях
 		{
 			var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -39,9 +39,8 @@ namespace BeautySaloon.Controllers
 			return View(appointments);
 		}
 		[HttpPost]
-		public async Task<IActionResult> EditInfo(string Name, string Email, string Phone)
+		public async Task<IActionResult> EditInfo(string Name, string Email, string Phone) //Обновление информации о пользователе
 		{
-			// Получение текущего пользователя
 			var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 			var user = await _accountRepository.FindUserByIdAsync(userId);
 
@@ -50,19 +49,16 @@ namespace BeautySaloon.Controllers
 				return NotFound();
 			}
 
-			// Обновление полей пользователя
 			user.Name = Name;
 			user.Email = Email;
 			user.PhoneNumber = Phone.Replace(" ", "");
 
-			// Сохранение изменений в базе данных
 			await _accountRepository.UpdateUserAsync(user);
 			await UpdateUserClaims(user);
-			// Перенаправление на другую страницу
 			return RedirectToAction("Index", "Account");
 		}
 		[HttpPost]
-		public async Task<IActionResult> ChangePassword(string NewPassword, string ConfirmPassword)
+		public async Task<IActionResult> ChangePassword(string NewPassword, string ConfirmPassword) //Обновление пароля
 		{
 
 
@@ -82,7 +78,7 @@ namespace BeautySaloon.Controllers
 
 
 		}
-		private async Task UpdateUserClaims(User user)
+		private async Task UpdateUserClaims(User user) //Обновлене инофрмации о пользователе в куках
 		{
 			var claims = new List<Claim>
 				{
@@ -98,10 +94,18 @@ namespace BeautySaloon.Controllers
 			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
 		}
 		[HttpPost]
-		public async Task<IActionResult> DeleteAppointment(int id)
+		public async Task<IActionResult> DeleteAppointment(int id) //Отмена записи пользователем через ЛК
 		{
 			await _accountRepository.DeleteAppointmentAsync(id);
 			return RedirectToAction("Index", "Account");
+		}
+		public async Task<IActionResult> LoadMoreAppointments(int skip, int take = 10) //Подгружаем по 10 записей  
+		{
+            var userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var appointments = await _accountRepository.LoadMoreAppointments(skip, userId,take );
+
+			return PartialView("AppointmentRows", appointments);
 		}
 	}
 }

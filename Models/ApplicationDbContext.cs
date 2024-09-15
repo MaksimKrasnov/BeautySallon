@@ -12,6 +12,8 @@ namespace BeautySaloon.Models
         public DbSet<Master> Master { get; set; }
         public DbSet<MasterService> MasterService { get; set; }
 
+        public DbSet<WorkSchedule> WorkSchedules { get; set; }
+
         public DbSet<User> User { get; set; }
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -30,7 +32,10 @@ namespace BeautySaloon.Models
             .WithMany(u => u.Appointments)
             .HasForeignKey(a => a.UserId);
 
-        
+            modelBuilder.Entity<Master>()
+                    .HasMany(m => m.WorkSchedules)
+                    .WithOne(ws => ws.Master)
+                    .HasForeignKey(ws => ws.MasterId);
         }
     }
 }

@@ -7,7 +7,7 @@
 		
 		public string Position { get; set; }
 		public virtual ICollection<MasterService> MasterServices { get; set; }
+        public virtual ICollection<WorkSchedule> WorkSchedules { get; set; }
 
-		// Другие свойства, если необходимо
-	}
+    }
 }

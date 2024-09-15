@@ -1,4 +1,5 @@
 ﻿using BeautySaloon.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -58,5 +59,31 @@ namespace BeautySaloon.Repositoryes.Account
                 await _db.SaveChangesAsync();
             }
         }
-    }
+		public async Task<List<Appointment>> LoadMoreAppointments(int skip, int userId,int take = 10)
+		{
+            var appointments = await _db.Appointment
+              .Where(a => a.UserId == userId)
+              .OrderByDescending(a => a.DateTime)
+              .Skip(skip)
+              .Take(take)
+              .ToListAsync();
+            var masterServiceIds = appointments.Select(a => a.MasterServiceId).ToList();
+
+			// Загружаем все MasterService по Id
+			var masterServices = await _db.MasterService
+				.Include(ms => ms.Master)
+				.Include(ms => ms.Service)
+				.Where(ms => masterServiceIds.Contains(ms.Id))
+				.ToListAsync();
+
+			// Заполняем связанные сущности для каждого Appointment
+			foreach (var appointment in appointments)
+			{
+				appointment.MasterService = masterServices.FirstOrDefault(ms => ms.Id == appointment.MasterServiceId);
+			}
+			return appointments;
+
+
+		}
+	}
 }

@@ -47,14 +47,14 @@
 
 <div class="container-fluid pb-5">
 	<div class="modal-body">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
+		<div class="row justify-content-center ">
+			<div class="col-md-6 ps-0 pe-0">
 				@if (User?.Identity?.IsAuthenticated == true)
 				{
-					<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp" value="@ViewBag.Name" />
+					<input type="text" id="nameInput" placeholder="Имя" class="form-control mb-3 inp " value="@ViewBag.Name" />
 
 					<div id="nameInputError" class="text-danger" style="display: none;">Поле "имя" не может быть пустым</div>
-					<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp" value="@ViewBag.PhoneNumber" />
+					<input type="text" id="phoneInput" placeholder="Телефон" class="form-control mb-3 inp " value="@ViewBag.PhoneNumber" />
 					<div id="phoneInputError" class="text-danger" style="display: none;">Поле "телефон" не может быть пустым </div>
 
 					<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
@@ -166,7 +166,7 @@
 					position: "center",
 					background: '#343a40',
 					icon: "success",
-					title: "Ваша заявка приянта",
+					title: "Ваша заявка принята",
 					text: "Вы записаны на "+selectedDateTime,
 					showConfirmButton: false,	
 					allowOutsideClick: true,
@@ -182,7 +182,20 @@
 					console.log(response);
 				})
 				.fail(function (xhr, status, error) {
-					console.error(xhr.responseText);
+					Swal.fire({
+						position: "center",
+						background: '#343a40',
+						icon: "error",
+						title: "Запись невозможна",
+						text: "К сожалению на выбранное время запись невозможна, пожалуйста выберите другое время",
+						showConfirmButton: true,
+						allowOutsideClick: true,
+						timer: 7500,
+						timerProgressBar: true,
+						customClass: {
+							popup: 'sweatAlert',
+						}
+					})
 				});
 		});
 	});

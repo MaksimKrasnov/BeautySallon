@@ -10,5 +10,6 @@ namespace BeautySaloon.Repositoryes.AppointmentRep
         Task<IEnumerable<DateTime>> GetAvailableTimeSlots(DateTime selectedDate, int masterId);
         //Task<bool> CreateAppointment(int serviceId, int masterId, string nameInput, string phoneInput, DateTime selectedDateTime);
         Task<bool> CreateAppointment(int serviceId, int masterId, string nameInput, string phoneInput, int userId, DateTime selectedDateTime);
+        Task<bool> IsMasterWorkingOnDate(DateTime selectedDate, int masterId);
     }
 }

@@ -15,7 +15,7 @@ namespace BeautySaloon.Repositoryes.Search
 
         public async Task<IEnumerable<Service>> GetService()
         {
-            return await _db.Service.Where(s => s.ServicesId == 1).ToListAsync();
+            return await _db.Service.ToListAsync();
         }
         public async Task<IEnumerable<Services>> GetServices()
         {

@@ -1,4 +1,5 @@
 C:\AspNet\Azure\BeautySaloon\obj\Release\net7.0\PubTmp\Out\BeautySaloon.exe
+C:\AspNet\Azure\BeautySaloon\obj\Release\net7.0\PubTmp\Out\web.config
 C:\AspNet\Azure\BeautySaloon\obj\Release\net7.0\PubTmp\Out\appsettings.Development.json
 C:\AspNet\Azure\BeautySaloon\obj\Release\net7.0\PubTmp\Out\appsettings.json
 C:\AspNet\Azure\BeautySaloon\obj\Release\net7.0\PubTmp\Out\BeautySaloon.dll

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Appointment>
 
 @{
-
+	
 }
 <link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
 
@@ -54,6 +54,9 @@
 		</div>
 	</div>
 </div>
+
+
+
 <div class="table-responsive mb-5">
 	<table class="table table-striped table-bordered tableColor">
 		<thead class="thead-dark">
@@ -62,76 +65,20 @@
 				<th>Мастер</th>
 				<th>Услуга</th>
 				<th>Цена</th>
-
 				<th>Статус</th>
 				<th>Действие</th>
 			</tr>
 		</thead>
-		<tbody>
-			@foreach (var appointment in Model)
-			{
-				<tr>
-
-					<td>@appointment.DateTime.ToString("g")</td>
-					<td>@appointment.MasterService?.Master?.Name </td>
-					<td>@appointment.MasterService?.Service?.Name </td>
-					<td>@appointment.MasterService?.Service?.Price </td>
-
-					<td>
-						@if (appointment.DateTime < DateTime.Now)
-						{
-							<span class="badge bg-success">ИСПОЛНЕН</span>
-						}
-						else
-						{
-							<span class="badge bg-warning">ОЖИДАЕТСЯ</span>
-						}
-					</td>
-					<td>
-						@if (appointment.DateTime > DateTime.Now)
-						{
-							<form asp-action="DeleteAppointment" asp-controller="Account" method="post" class="d-inline">
-								<input type="hidden" name="id" value="@appointment.Id" />
-								<button type="submit" class="btn btn-danger btn-sm">Отменить</button>
-							</form>
-						}
-					</td>
-				</tr>
-			}
+		<tbody id="appointmentTableBody">
+			@Html.Partial("AppointmentRows", Model.Take(10))
 		</tbody>
 	</table>
 </div>
 
+<div class="d-flex justify-content-center">
+	<button id="loadMoreButton" class="button-color mb-5 w-25 text-white">Загрузить еще</button>
+</div>
 
-
-@*
-<div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="editInfoModalLabel">Редактировать личную информацию</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form id="editInfoForm" method="post" action="/Account/EditInfo">
-					<div class="mb-3">
-						<label for="name" class="form-label">Имя</label>
-						<input type="text" class="form-control" id="name" name="Name" value="@ViewBag.Name" required>
-					</div>
-					<div class="mb-3">
-						<label for="email" class="form-label">Email</label>
-						<input type="email" class="form-control" id="email" name="Email" value="@ViewBag.Email" required>
-					</div>
-					<div class="mb-3">
-						<label for="phone" class="form-label">Телефон</label>
-						<input type="tel" class="form-control" id="phone" name="Phone" value="@ViewBag.PhoneNumber" required>
-					</div>
-					<button type="submit" class="btn btn-primary">Сохранить</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div> *@
 <div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -158,7 +105,7 @@
 						<div id="phoneCorrectlytError" class="text-danger" style="display: none;">Некоректно введен телефон</div>
 
 					</div>
-					<button type="submit" class="btn btn-primary">Сохранить</button>
+					<button type="submit" class="btn btn-primary ">Сохранить</button>
 				</form>
 			</div>
 		</div>
@@ -192,6 +139,22 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
+	let skip = 10;
+	document.getElementById('loadMoreButton').addEventListener('click', function () {
+		$.ajax({
+			url: '@Url.Action("LoadMoreAppointments", "Account")',
+			type: 'GET',
+			data: { skip: skip },
+			success: function (data) {
+				if (data.trim() !== '') {
+					$('#appointmentTableBody').append(data);
+					skip += 10;
+				} else {
+					$('#loadMoreButton').hide(); // Скрыть кнопку, если больше нет записей
+				}
+			}
+		});
+	});
 	document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
 		var newPassword = document.getElementById("newPassword").value;
 		var confirmPassword = document.getElementById("confirmPassword").value;

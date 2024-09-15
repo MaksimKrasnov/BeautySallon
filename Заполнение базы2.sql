@@ -1,8 +1,4 @@
-select * from Appointment
-select * from MasterService
-use accent
-DELETE FROM MasterService
-WHERE id=102 ;
+
 select * from Master
 insert into [dbo].[MasterService]
 values(1,1)
@@ -342,13 +338,34 @@ insert into [dbo].[MasterService]
 values(7,74)
 
 
+use SallonAccent
+
+
+select *from master
+select * from service
+
+use SallonAccent
+select *from [dbo].[Master]
+
+select * from [dbo].[MasterService]
+ALTER TABLE [dbo].[user]
+ADD [Name] NVARCHAR(255) NOT NULL;
+
+insert into [dbo].[user] 
+values('defaulth@defaulth.ru','0','0','NoAutorizUser');
 
 
 
 
 
 
-
+SELECT *
+FROM Appointment AS a
+LEFT JOIN MasterService AS ms ON a.MasterServiceId = ms.Id
+LEFT JOIN Master AS m ON ms.MasterId = m.Id
+LEFT JOIN Service AS s ON ms.ServiceId = s.Id
+WHERE a.UserId = 2
+ORDER BY a.DateTime DESC;
 
 
 

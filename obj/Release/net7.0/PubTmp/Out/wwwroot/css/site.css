@@ -1,36 +1,38 @@
 html {
-  font-size: 14px;
-
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  /*box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;*/
+    /*box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;*/
 }
+
 main {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
+
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-  height:100%;
+    margin-bottom: 60px;
+    height: 100%;
 }
 
 .logo {
     width: 239px;
     height: 72px;
 }
+
 
 .button-color {
     background-color: rgb(178,118,88);
@@ -45,9 +47,52 @@ body {
 .underline {
     text-decoration-color: #da9471;
 }
+
 .sweatAlert {
     color: #da9471;
 }
-.logoWidth{
-    width:10%;
+
+.logoWidth {
+    width: 10%;
+}
+
+@media(max-width: 991.98px) {
+    .logo {
+        display: none;
+    }
+
+    .menu-button {
+        margin-left: 0 !important;
+    }
+
+    .navbar-dark .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28 218, 148, 113, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    .map {
+        width: 400px;
+        height: 400px;
+    }
+
+    .footer-content {
+        display: none;
+    }
+
+    .footer-simple {
+        display: block;
+    }
+
+
+    /* Показать полный футер на экранах больше 992px и скрыть простую надпись */
+
+
+    @media (min-width: 992px) {
+        .footer-content {
+            display: block;
+        }
+
+        .footer-simple {
+            display: none;
+        }
+    }
 }

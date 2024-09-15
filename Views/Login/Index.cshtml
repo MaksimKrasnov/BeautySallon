@@ -16,23 +16,7 @@
 			<div class="form-container">
 				<div class="form-icon mt-2"><i class="fa fa-user"></i></div>
 				<h3 class="title">Login</h3>
-				@* <form class="form-horizontal">
-					<div class="form-group">
-						<label>Email:</label>
-						<input class="form-control" type="email" placeholder="email address">
-					</div>
-					<div class="form-group">
-						<label>Пароль:</label>
-						<input class="form-control" type="password" placeholder="password">
-					</div>
-					<button type="button" class="btn btn-default">Войти</button>
-						<div class="text-center mt-3">
-							<a href="#" class="text-decoration-none">Забыли пароль?</a>
-						</div>
-						<div class="text-center mt-2">
-							<p>Нет аккаунта? <a href="@Url.Action("Index", "Registration")" class="text-decoration-none ">Зарегистрироваться</a></p>
-						</div>
-				</form> *@
+				
 					<form class="form-horizontal" asp-action="Index" asp-controller="Login" asp-anti-forgery="true">
 						<div class="validation" asp-validation-summary="ModelOnly"></div>
 						<div>
@@ -51,7 +35,7 @@
 							</div>
 							<div class="text-center mt-3">
 
-							<a href="#" class="text-decoration-none">Забыли пароль?</a>
+								<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#forgotPasswordModal">Забыли пароль?</a>
 							</div>
 
 							</div>
@@ -66,3 +50,49 @@
 	</div>
 </div> 
 </body>
+<!-- Модальное окно -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="forgotPasswordModalLabel">Восстановление пароля</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="forgotPasswordForm">
+					<div class="form-group">
+						<label for="email">Email адрес</label>
+						<input type="email" class="form-control" id="email" name="email" required>
+					</div>
+					<button type="submit" class="btn btn-primary">Подтвердить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+		// При нажатии на ссылку "Забыли пароль?" открываем модальное окно
+		$('a[href="#"]').click(function () {
+			$('#forgotPasswordModal').modal('show'); // Открываем модальное окно
+		});
+
+		// Обработка отправки формы в модальном окне
+		$('#forgotPasswordForm').submit(function (event) {
+			event.preventDefault(); // Предотвращаем стандартное действие формы
+
+			// Получаем значение email из поля формы
+			var email = $('#email').val();
+
+			// Ваша логика отправки данных на сервер или обработки здесь
+			console.log('Email адрес для восстановления пароля:', email);
+
+			// Дополнительные действия (например, закрытие модального окна)
+			$('#forgotPasswordModal').modal('hide');
+		});
+	});
+</script>

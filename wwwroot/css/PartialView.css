@@ -7,18 +7,18 @@
 
 .ml {
     margin-left: 25%;
-    border: 2px solid transparent; /* Начальные стили рамки */
+    border: 2px solid transparent; 
     transition: border-color 0.3s, color 0.3s;
     margin-bottom: 0;
 }
 
     .ml:hover {
-        border-color: #da9471; /* Цвет рамки при наведении */
-        color: #da9471; /* Цвет текста при наведении */
+        border-color: #da9471; 
+        color: #da9471; 
     }
 
         .ml:hover p {
-            color: #da9471; /* Цвет текста при наведении */
+            color: #da9471; 
         }
 
 

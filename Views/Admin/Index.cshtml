@@ -160,7 +160,7 @@ td {
 			console.log("masterId:", masterId);
 			console.log("selectedDateTime:", selectedDateTime);
 
-			// Другой код для отправки AJAX запроса
+			
 			$.post('@Url.Action("Create", "Appointment")', { serviceId: serviceId, masterId: masterId, nameInput: nameInput, phoneInput: phoneInput, selectedDateTime: selectedDateTime })
 				.done(function (response) {
 					Swal.fire({

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Appointment>
+
+@{
+}
+
+
+
+@foreach (var appointment in Model)
+{
+    <tr>
+        <td>@appointment.DateTime.ToString("g")</td>
+        <td>@appointment.MasterService?.Master?.Name </td>
+        <td>@appointment.MasterService?.Service?.Name </td>
+        <td>@appointment.MasterService?.Service?.Price </td>
+        <td>
+            @if (appointment.DateTime < DateTime.Now)
+            {
+                <span class="badge bg-success">ИСПОЛНЕН</span>
+            }
+            else
+            {
+                <span class="badge bg-warning">ОЖИДАЕТСЯ</span>
+            }
+        </td>
+        <td>
+            @if (appointment.DateTime > DateTime.Now)
+            {
+                <form asp-action="DeleteAppointment" asp-controller="Account" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@appointment.Id" />
+                    <button type="submit" class="btn btn-danger btn-sm">Отменить</button>
+                </form>
+            }
+        </td>
+    </tr>
+}
+ 

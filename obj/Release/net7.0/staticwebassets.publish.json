@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lRgSOG6gphoWapvzzmyRGkAQ1gYIBIlPKhBudbOSP6Q=",
+  "Hash": "xhrWGSn5GFf5isDdQ6g7CIA+92bh1sjMMU3Cchgy3Rg=",
   "Source": "BeautySaloon",
   "BasePath": "_content/BeautySaloon",
   "Mode": "Default",
@@ -1345,6 +1345,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\web.config",
+      "SourceId": "BeautySaloon",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\AspNet\\Azure\\BeautySaloon\\wwwroot\\",
+      "BasePath": "_content/BeautySaloon",
+      "RelativePath": "web.config",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\web.config"
     }
   ]
 }

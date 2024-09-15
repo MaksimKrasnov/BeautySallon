@@ -1,5 +1,6 @@
 
-	
+use SallonAccent
+select * from Master
 --------------------Добавление мастеров
 insert into Master
 values('Соловьева Виктория Владимировна','Мастер маникюра-педикюра')
@@ -277,3 +278,4 @@ values('Питание и увлажнение Kidra',1900,5)
 
 
 
+select* from master

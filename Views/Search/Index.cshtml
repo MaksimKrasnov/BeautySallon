@@ -5,7 +5,11 @@
 <style>
     /* Стили для добавленной области */
     .extra-space {
-        padding: 400px ; /* Вертикальный отступ внутри области */
+        padding: 400px ; 
+    }
+
+    .visible {
+        display: block !important; 
     }
 </style>
 <div class="container bg-dark pt-5">
@@ -15,8 +19,25 @@
            
         </form>
     </div>
-    <div id="searchResults" class="bg-dark"></div>
 
+    <div id="mainContent" class="w-75 mt-5 align-items-center bg-dark" data-state=" @ViewData["State"]">
+            
+        @foreach (var item in Model.Service)
+        {
+            <a style="text-decoration: none" asp-area="" asp-controller="Appointment" asp-action="Index" asp-route-id="@item.Id">
+                <div class="ml p-0 align-content-center">
+                    <p class="textService">
+                        @item.Name<br />
+                        @item.Price р.
+                    </p>
+                    <div style="clear: both;"></div>
+                    <br />
+                </div>
+            </a>
+        }
+    </div>
+    
+    <div id="searchResults" class="bg-dark"></div>
 </div>
 <div class="bg-dark extra-space">
     <!-- Ваша дополнительная область -->
