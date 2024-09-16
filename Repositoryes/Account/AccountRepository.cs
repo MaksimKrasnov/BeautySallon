@@ -8,7 +8,7 @@ namespace BeautySaloon.Repositoryes.Account
     public class AccountRepository : IAccountRepository
     {
         private readonly ApplicationDbContext _db;
-
+        public AccountRepository() { }
         public AccountRepository(ApplicationDbContext context)
         {
             _db = context;
